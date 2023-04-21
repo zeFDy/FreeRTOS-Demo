@@ -1,0 +1,78 @@
+
+main_blinky.o:     file format elf32-littlearm
+
+
+Disassembly of section .text.prvQueueSendTask:
+
+00000000 <prvQueueSendTask>:
+   0:	b507      	push	{r0, r1, r2, lr}
+   2:	2364      	movs	r3, #100	; 0x64
+   4:	4c07      	ldr	r4, [pc, #28]	; (24 <prvQueueSendTask+0x24>)
+   6:	9301      	str	r3, [sp, #4]
+   8:	f7ff fffe 	bl	0 <xTaskGetTickCount>
+   c:	9000      	str	r0, [sp, #0]
+   e:	4668      	mov	r0, sp
+  10:	21c8      	movs	r1, #200	; 0xc8
+  12:	f7ff fffe 	bl	0 <xTaskDelayUntil>
+  16:	2300      	movs	r3, #0
+  18:	6820      	ldr	r0, [r4, #0]
+  1a:	461a      	mov	r2, r3
+  1c:	a901      	add	r1, sp, #4
+  1e:	f7ff fffe 	bl	0 <xQueueGenericSend>
+  22:	e7f4      	b.n	e <prvQueueSendTask+0xe>
+  24:	00000000 	.word	0x00000000
+
+Disassembly of section .text.prvQueueReceiveTask:
+
+00000000 <prvQueueReceiveTask>:
+   0:	b537      	push	{r0, r1, r2, r4, r5, lr}
+   2:	2400      	movs	r4, #0
+   4:	4d07      	ldr	r5, [pc, #28]	; (24 <prvQueueReceiveTask+0x24>)
+   6:	6828      	ldr	r0, [r5, #0]
+   8:	a901      	add	r1, sp, #4
+   a:	f04f 32ff 	mov.w	r2, #4294967295
+   e:	f7ff fffe 	bl	0 <xQueueReceive>
+  12:	9b01      	ldr	r3, [sp, #4]
+  14:	2b64      	cmp	r3, #100	; 0x64
+  16:	d1f6      	bne.n	6 <prvQueueReceiveTask+0x6>
+  18:	2000      	movs	r0, #0
+  1a:	f7ff fffe 	bl	0 <vParTestToggleLED>
+  1e:	9401      	str	r4, [sp, #4]
+  20:	e7f1      	b.n	6 <prvQueueReceiveTask+0x6>
+  22:	bf00      	nop
+  24:	00000000 	.word	0x00000000
+
+Disassembly of section .text.main_blinky:
+
+00000000 <main_blinky>:
+   0:	b507      	push	{r0, r1, r2, lr}
+   2:	2200      	movs	r2, #0
+   4:	2104      	movs	r1, #4
+   6:	2001      	movs	r0, #1
+   8:	f7ff fffe 	bl	0 <xQueueGenericCreate>
+   c:	4b0c      	ldr	r3, [pc, #48]	; (40 <main_blinky+0x40>)
+   e:	6018      	str	r0, [r3, #0]
+  10:	b1a0      	cbz	r0, 3c <main_blinky+0x3c>
+  12:	2400      	movs	r4, #0
+  14:	490b      	ldr	r1, [pc, #44]	; (44 <main_blinky+0x44>)
+  16:	2302      	movs	r3, #2
+  18:	22c8      	movs	r2, #200	; 0xc8
+  1a:	9300      	str	r3, [sp, #0]
+  1c:	4623      	mov	r3, r4
+  1e:	480a      	ldr	r0, [pc, #40]	; (48 <main_blinky+0x48>)
+  20:	9401      	str	r4, [sp, #4]
+  22:	f7ff fffe 	bl	0 <xTaskCreate>
+  26:	2301      	movs	r3, #1
+  28:	4908      	ldr	r1, [pc, #32]	; (4c <main_blinky+0x4c>)
+  2a:	22c8      	movs	r2, #200	; 0xc8
+  2c:	9300      	str	r3, [sp, #0]
+  2e:	4623      	mov	r3, r4
+  30:	4807      	ldr	r0, [pc, #28]	; (50 <main_blinky+0x50>)
+  32:	9401      	str	r4, [sp, #4]
+  34:	f7ff fffe 	bl	0 <xTaskCreate>
+  38:	f7ff fffe 	bl	0 <vTaskStartScheduler>
+  3c:	e7fe      	b.n	3c <main_blinky+0x3c>
+  3e:	bf00      	nop
+	...
+  4c:	00000003 	.word	0x00000003
+  50:	00000000 	.word	0x00000000

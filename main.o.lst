@@ -1,0 +1,131 @@
+
+main.o:     file format elf32-littlearm
+
+
+Disassembly of section .text.Cpu1Code:
+
+00000000 <Cpu1Code>:
+   0:	4770      	bx	lr
+
+Disassembly of section .text.SdRamMain:
+
+00000000 <SdRamMain>:
+   0:	2000      	movs	r0, #0
+   2:	4770      	bx	lr
+
+Disassembly of section .text.vApplicationMallocFailedHook:
+
+00000000 <vApplicationMallocFailedHook>:
+   0:	b508      	push	{r3, lr}
+   2:	f7ff fffe 	bl	0 <ulPortSetInterruptMask>
+   6:	e7fe      	b.n	6 <vApplicationMallocFailedHook+0x6>
+
+Disassembly of section .text.vApplicationStackOverflowHook:
+
+00000000 <vApplicationStackOverflowHook>:
+   0:	b508      	push	{r3, lr}
+   2:	f7ff fffe 	bl	0 <ulPortSetInterruptMask>
+   6:	e7fe      	b.n	6 <vApplicationStackOverflowHook+0x6>
+
+Disassembly of section .text.vApplicationIdleHook:
+
+00000000 <vApplicationIdleHook>:
+   0:	b507      	push	{r0, r1, r2, lr}
+   2:	f7ff fffe 	bl	0 <xPortGetFreeHeapSize>
+   6:	9001      	str	r0, [sp, #4]
+   8:	9b01      	ldr	r3, [sp, #4]
+   a:	b003      	add	sp, #12
+   c:	f85d fb04 	ldr.w	pc, [sp], #4
+
+Disassembly of section .text.vAssertCalled:
+
+00000000 <vAssertCalled>:
+   0:	b507      	push	{r0, r1, r2, lr}
+   2:	2300      	movs	r3, #0
+   4:	9301      	str	r3, [sp, #4]
+   6:	f7ff fffe 	bl	0 <vPortEnterCritical>
+   a:	9b01      	ldr	r3, [sp, #4]
+   c:	b123      	cbz	r3, 18 <vAssertCalled+0x18>
+   e:	b003      	add	sp, #12
+  10:	f85d eb04 	ldr.w	lr, [sp], #4
+  14:	f7ff bffe 	b.w	0 <vPortExitCritical>
+  18:	bf00      	nop
+  1a:	e7f6      	b.n	a <vAssertCalled+0xa>
+
+Disassembly of section .text.vApplicationTickHook:
+
+00000000 <vApplicationTickHook>:
+   0:	4770      	bx	lr
+
+Disassembly of section .text.vConfigureTickInterrupt:
+
+00000000 <vConfigureTickInterrupt>:
+   0:	b507      	push	{r0, r1, r2, lr}
+   2:	f7ff fffe 	bl	0 <alt_gpt_all_tmr_init>
+   6:	a901      	add	r1, sp, #4
+   8:	2015      	movs	r0, #21
+   a:	f7ff fffe 	bl	0 <alt_clk_freq_get>
+   e:	9b01      	ldr	r3, [sp, #4]
+  10:	4917      	ldr	r1, [pc, #92]	; (70 <vConfigureTickInterrupt+0x70>)
+  12:	2001      	movs	r0, #1
+  14:	fba3 3101 	umull	r3, r1, r3, r1
+  18:	0989      	lsrs	r1, r1, #6
+  1a:	f7ff fffe 	bl	0 <alt_gpt_counter_set>
+  1e:	2001      	movs	r0, #1
+  20:	f7ff fffe 	bl	0 <alt_gpt_time_microsecs_get>
+  24:	f5b0 7f7a 	cmp.w	r0, #1000	; 0x3e8
+  28:	d004      	beq.n	34 <vConfigureTickInterrupt+0x34>
+  2a:	4812      	ldr	r0, [pc, #72]	; (74 <vConfigureTickInterrupt+0x74>)
+  2c:	f44f 718b 	mov.w	r1, #278	; 0x116
+  30:	f7ff fffe 	bl	0 <vConfigureTickInterrupt>
+  34:	2101      	movs	r1, #1
+  36:	4608      	mov	r0, r1
+  38:	f7ff fffe 	bl	0 <alt_gpt_mode_set>
+  3c:	2001      	movs	r0, #1
+  3e:	f7ff fffe 	bl	0 <alt_gpt_tmr_start>
+  42:	4b0d      	ldr	r3, [pc, #52]	; (78 <vConfigureTickInterrupt+0x78>)
+  44:	4a0d      	ldr	r2, [pc, #52]	; (7c <vConfigureTickInterrupt+0x7c>)
+  46:	21f0      	movs	r1, #240	; 0xf0
+  48:	201d      	movs	r0, #29
+  4a:	f8c3 20e8 	str.w	r2, [r3, #232]	; 0xe8
+  4e:	2200      	movs	r2, #0
+  50:	f8c3 20ec 	str.w	r2, [r3, #236]	; 0xec
+  54:	f7ff fffe 	bl	0 <alt_int_dist_priority_set>
+  58:	201d      	movs	r0, #29
+  5a:	f7ff fffe 	bl	0 <alt_int_dist_enable>
+  5e:	2001      	movs	r0, #1
+  60:	f7ff fffe 	bl	0 <alt_gpt_int_clear_pending>
+  64:	2001      	movs	r0, #1
+  66:	f7ff fffe 	bl	0 <alt_gpt_int_enable>
+  6a:	b003      	add	sp, #12
+  6c:	f85d fb04 	ldr.w	pc, [sp], #4
+  70:	10624dd3 	.word	0x10624dd3
+	...
+
+Disassembly of section .text.vRegisterIRQHandler:
+
+00000000 <vRegisterIRQHandler>:
+   0:	28ff      	cmp	r0, #255	; 0xff
+   2:	bf9f      	itttt	ls
+   4:	4b03      	ldrls	r3, [pc, #12]	; (14 <vRegisterIRQHandler+0x14>)
+   6:	f843 1030 	strls.w	r1, [r3, r0, lsl #3]
+   a:	eb03 00c0 	addls.w	r0, r3, r0, lsl #3
+   e:	6042      	strls	r2, [r0, #4]
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	00000000 	.word	0x00000000
+
+Disassembly of section .text.vApplicationIRQHandler:
+
+00000000 <vApplicationIRQHandler>:
+   0:	b662      	cpsie	i
+   2:	f410 7f40 	tst.w	r0, #768	; 0x300
+   6:	d108      	bne.n	1a <vApplicationIRQHandler+0x1a>
+   8:	4a04      	ldr	r2, [pc, #16]	; (1c <vApplicationIRQHandler+0x1c>)
+   a:	f3c0 0309 	ubfx	r3, r0, #0, #10
+   e:	eb02 01c3 	add.w	r1, r2, r3, lsl #3
+  12:	f852 3033 	ldr.w	r3, [r2, r3, lsl #3]
+  16:	6849      	ldr	r1, [r1, #4]
+  18:	4718      	bx	r3
+  1a:	4770      	bx	lr
+  1c:	00000000 	.word	0x00000000
